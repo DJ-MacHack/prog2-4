@@ -11,15 +11,15 @@
 using namespace std;
 
 Lagerdialog::Lagerdialog(Lager lager){
-    this->lager = &lager;
+    this->lager = lager;
 }
 
 Lagerdialog::Lagerdialog(){
     Lager lager = newLager();
-    this->lager = &lager;
+    this->lager = lager;
 }
 
-Lager newLager(){
+Lager Lagerdialog::newLager(){
     string name;
     int dimensionen;
     cout << "Name fuer das neue Lager: ";
@@ -32,8 +32,74 @@ Lager newLager(){
     return lager;
 }
 
-void start(){
+void Lagerdialog::start(){
+    FunktionsTyp funktion;
+    do {
+        try {
+            funktion = einlesenFunktion();
+            ausfuehrenFunktion(funktion);
 
+        } catch (const string& e) {
+            cout << "Ausnahme: " << e << endl;
+        }
+        funktion = WEITER;
+    } while (funktion != ENDE);
+}
+
+FunktionsTyp Lagerdialog::einlesenFunktion() {
+    cout << ANLEGEN << ": anlegen; "
+         << ZUGANG << ": Zugang buchen; "
+         << ABGANG << ": Abgang buchen; "
+         << LOESCHEN << ": loeschen; "
+         << PREISAENDERN << ": Preis aendern; "
+         << ENDE << ": beenden -> ";
+    int funktion;
+    cin >> funktion;
+    return static_cast<FunktionsTyp>(funktion);
+}
+
+void Lagerdialog::ausfuehrenFunktion(FunktionsTyp funktion) {
+    int artikelnummer, menge;
+    double betrag;
+    switch (funktion) {
+        case ANLEGEN:
+            this->lager.addNewArtikel();
+            break;
+        case ZUGANG:
+            cout << "Artikelnummer: ";
+            cin >> artikelnummer;
+            cout << endl << "Zugangsmenge : ";
+            cin >> menge;
+            cout << endl;
+            this->lager.bucheZugang(artikelnummer, menge);
+            break;
+        case ABGANG:
+            cout << "Artikelnummer: ";
+            cin >> artikelnummer;
+            cout << endl << "Abgangsmenge : ";
+            cin >> menge;
+            cout << endl;
+            this->lager.bucheAbgang(artikelnummer, menge);
+            break;
+        case LOESCHEN:
+            cout << "Artikelnummer: ";
+            cin >> artikelnummer;
+            cout << endl;
+            this->lager.deleteArtikel(artikelnummer);
+            break;
+        case PREISAENDERN:
+            cout << endl << "Prozentuale Preisänderung: ";
+            cin >> betrag;
+            cout << endl;
+            this->lager.changePreis(betrag);
+            break;
+        case ENDE:
+            this->lager.printLager();
+            break;
+        default:
+            //ausfuehrenFunktion(einlesenFunktion()); //korrekt?
+            break;
+    }
 }
 
 string Lagerdialog::toString() const {

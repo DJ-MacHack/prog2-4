@@ -1,0 +1,64 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+D:/Users/DJ MacHack/Dropbox/htw/ss17/Prog 2/Aufgaben/4/prog2-4/Artikel.cpp
+Artikel.h
+D:/Users/DJ MacHack/Dropbox/htw/ss17/Prog 2/Aufgaben/4/prog2-4/Artikel.h
+
+D:/Users/DJ MacHack/Dropbox/htw/ss17/Prog 2/Aufgaben/4/prog2-4/Artikel.h
+iostream
+-
+
+D:/Users/DJ MacHack/Dropbox/htw/ss17/Prog 2/Aufgaben/4/prog2-4/Artikeldialog.cpp
+fstream
+-
+iostream
+-
+sstream
+-
+Artikeldialog.h
+D:/Users/DJ MacHack/Dropbox/htw/ss17/Prog 2/Aufgaben/4/prog2-4/Artikeldialog.h
+
+D:/Users/DJ MacHack/Dropbox/htw/ss17/Prog 2/Aufgaben/4/prog2-4/Artikeldialog.h
+Artikel.h
+D:/Users/DJ MacHack/Dropbox/htw/ss17/Prog 2/Aufgaben/4/prog2-4/Artikel.h
+vector
+-
+iostream
+-
+
+D:/Users/DJ MacHack/Dropbox/htw/ss17/Prog 2/Aufgaben/4/prog2-4/Lager.cpp
+Lager.h
+D:/Users/DJ MacHack/Dropbox/htw/ss17/Prog 2/Aufgaben/4/prog2-4/Lager.h
+
+D:/Users/DJ MacHack/Dropbox/htw/ss17/Prog 2/Aufgaben/4/prog2-4/Lager.h
+iostream
+-
+list
+-
+map
+-
+Artikel.h
+D:/Users/DJ MacHack/Dropbox/htw/ss17/Prog 2/Aufgaben/4/prog2-4/Artikel.h
+Artikeldialog.h
+D:/Users/DJ MacHack/Dropbox/htw/ss17/Prog 2/Aufgaben/4/prog2-4/Artikeldialog.h
+
+D:/Users/DJ MacHack/Dropbox/htw/ss17/Prog 2/Aufgaben/4/prog2-4/Lagerdialog.cpp
+sstream
+-
+Lagerdialog.h
+D:/Users/DJ MacHack/Dropbox/htw/ss17/Prog 2/Aufgaben/4/prog2-4/Lagerdialog.h
+
+D:/Users/DJ MacHack/Dropbox/htw/ss17/Prog 2/Aufgaben/4/prog2-4/Lagerdialog.h
+Lager.h
+D:/Users/DJ MacHack/Dropbox/htw/ss17/Prog 2/Aufgaben/4/prog2-4/Lager.h
+
+D:/Users/DJ MacHack/Dropbox/htw/ss17/Prog 2/Aufgaben/4/prog2-4/main.cpp
+Lagerdialog.h
+D:/Users/DJ MacHack/Dropbox/htw/ss17/Prog 2/Aufgaben/4/prog2-4/Lagerdialog.h
+

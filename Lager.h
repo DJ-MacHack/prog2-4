@@ -31,6 +31,7 @@ public:
     void bucheAbgang(Artikel artikel, int menge);
     void bucheAbgang(int artikelnummer, int menge);
     void changePreis(double prozent);
+    void printLager();
 
 private:
     int dimension;

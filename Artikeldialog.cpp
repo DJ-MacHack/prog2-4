@@ -19,6 +19,7 @@ void Artikeldialog::artikelDatenAnzeigen(const Artikel &artikel) {
     cout << "Artikelnummer: " << artikel.getArtikelnummer() << endl;
     cout << "Artikelbezeichnung: " << artikel.getBezeichnung() << endl;
     cout << "Artikelbestand: " << artikel.getBestand() << endl;
+    cout << "Artikelpreis: " << artikel.getPreis() << endl;
 }
 
 /**
@@ -40,7 +41,7 @@ string Artikeldialog::auswahl() {
  * @return neu
  */
 Artikel Artikeldialog::artikelErstellen() {
-    int nummer, menge;
+    int nummer, menge, preis;
     string name;
     Artikel neu = Artikel(1000);
     do {
@@ -50,8 +51,10 @@ Artikel Artikeldialog::artikelErstellen() {
         cin >> name;
         cout << "Ihr Artikelbestand:" << endl;
         cin >> menge;
+        cout << "Ihr Artikelpreis:" << endl;
+        cin >> preis;
         try {
-            neu = Artikel(nummer, name, menge);
+            neu = Artikel(nummer, name, menge, preis);
             return neu;
         } catch (exception e) {
             e.what();

@@ -38,6 +38,12 @@ class niedrigException: public exception {
     }
 } niedrigexp;
 
+class preisException: public exception {
+    virtual const char *what() const throw() {
+        return "Preis kann nicht unter 0 Euro sein!";
+    }
+} preisexp;
+
 
 /**
  * Hauptkonstruktor, der (private) Methoden, die auch ueberpruefen, aufruft
@@ -46,15 +52,16 @@ class niedrigException: public exception {
  * @param bestand
  */
 
-Artikel::Artikel(int artikelnummer, string bezeichnung, int bestand){
+Artikel::Artikel(int artikelnummer, string bezeichnung, int bestand, double preis){
     setArtikelnummer(artikelnummer);
     setBezeichnung(bezeichnung);
     setBestand(bestand);
+    setPreis(preis);
 }
 
 //Nebenkonstruktoren, die den Hauptkonstruktor aufrufen
-Artikel::Artikel(int artikelnummer, string bezeichnung):Artikel(artikelnummer, bezeichnung,0) {}
-Artikel::Artikel(int artikelnummer):Artikel(artikelnummer, "Testbezeichnung",0) {} //Für Artikel, deren Name noch nicht bekannt ist/nicht feststeht
+Artikel::Artikel(int artikelnummer, string bezeichnung):Artikel(artikelnummer, bezeichnung,0,0.0) {}
+Artikel::Artikel(int artikelnummer):Artikel(artikelnummer, "Testbezeichnung",0, 0.0) {} //Für Artikel, deren Name noch nicht bekannt ist/nicht feststeht
 /**
  * Gibt den aktuellen Bestand aus
  *@return bestand
@@ -141,4 +148,16 @@ void Artikel::setBestand(int menge) {
         throw niedrigexp;
     }
     this->bestand=menge;
+}
+
+double Artikel::getPreis() const {
+    return this->preis;
+}
+
+void Artikel::setPreis(double preis) {
+    if(preis < 0.0){
+        throw preisexp;
+    } else {
+        this->preis = preis;
+    }
 }

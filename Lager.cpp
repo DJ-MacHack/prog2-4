@@ -14,19 +14,19 @@ class LeereException : public exception {
     virtual const char *what() const throw() {
         return "Leerer Name!";
     }
-} leereexp;
+} leeresLagerExp;
 
 class negativeException : public exception {
     virtual const char *what() const throw() {
         return "Negative Dimension!";
     }
-} negexp;
+} negDimExp;
 
 class nullException : public exception {
     virtual const char *what() const throw() {
         return "Dimension muss > 0 sein!";
     }
-} nullexp;
+} nullDimExp;
 
 Lager::Lager(string name, int dimension) {
     setDimension(dimension);
@@ -130,12 +130,22 @@ void Lager::bucheAbgang(int artikelnummer, int menge) {
 }
 
 void Lager::changePreis(double prozent) {
+    for(this->iter = this->lagermap.begin(); iter != this->lagermap.end(); this->iter++){
+        double preis = this->iter.operator*().second.getPreis() * (prozent/100);
+        this->iter.operator*().second.setPreis(preis);
+    }
+}
 
+void Lager::printLager() {
+    Artikeldialog dialog;
+    for(this->iter = this->lagermap.begin(); iter != this->lagermap.end(); this->iter++){
+        dialog.artikelDatenAnzeigen(this->iter.operator*().second);
+    }
 }
 
 void Lager::setName(string name) {
     if (name == "") {
-        throw leereexp;
+        throw leeresLagerExp;
     } else {
         this->name = name;
     }
@@ -143,10 +153,10 @@ void Lager::setName(string name) {
 
 void Lager::setDimension(int dimension) {
     if (dimension == 0) {
-        throw nullexp;
+        throw nullDimExp;
     } else {
         if (dimension < 0) {
-            throw negexp;
+            throw negDimExp;
         } else {
             this->dimension = dimension;
         }

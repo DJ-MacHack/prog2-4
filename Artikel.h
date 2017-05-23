@@ -13,7 +13,7 @@ using namespace std;
 
 class Artikel {
 
-public: Artikel(int nummer, string name, int menge);
+public: Artikel(int nummer, string name, int menge, double preis);
         Artikel(int nummer, string name);
         Artikel(int nummer);
         void bucheZugang(int menge);
@@ -22,11 +22,14 @@ public: Artikel(int nummer, string name, int menge);
         int getBestand() const;
         string getBezeichnung() const;
         int getArtikelnummer() const;
+        double getPreis() const;
+        void setPreis(double preis);
 
 private:
         int bestand;
         string bezeichnung;
         int artikelnummer;
+        double preis;
         void setArtikelnummer(int artikelnummer);
         void setBestand(int menge);
 
