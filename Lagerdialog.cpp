@@ -11,15 +11,15 @@
 using namespace std;
 
 Lagerdialog::Lagerdialog(Lager lager){
-    this->lager = lager;
+    this->lager = &lager;
 }
 
 Lagerdialog::Lagerdialog(){
-    Lager lager = newLager();
+    Lager* lager = newLager();
     this->lager = lager;
 }
 
-Lager Lagerdialog::newLager(){
+Lager* Lagerdialog::newLager(){
     string name;
     int dimensionen;
     cout << "Name fuer das neue Lager: ";
@@ -28,7 +28,7 @@ Lager Lagerdialog::newLager(){
     cout << "Dimensionen fuer das neue Lager: ";
     cin >> dimensionen;
     cout << endl;
-    Lager lager(name, dimensionen);
+    Lager* lager = new Lager(name, dimensionen);
     return lager;
 }
 
@@ -42,7 +42,6 @@ void Lagerdialog::start(){
         } catch (const string& e) {
             cout << "Ausnahme: " << e << endl;
         }
-        funktion = WEITER;
     } while (funktion != ENDE);
 }
 
@@ -54,8 +53,14 @@ FunktionsTyp Lagerdialog::einlesenFunktion() {
          << PREISAENDERN << ": Preis aendern; "
          << ENDE << ": beenden -> ";
     int funktion;
-    cin >> funktion;
-    return static_cast<FunktionsTyp>(funktion);
+    if(cin) {
+        cin >> funktion;
+        cout << endl;
+        return static_cast<FunktionsTyp>(funktion);
+    } else {
+        cout << "cin error" << endl;
+        return ENDE;
+    }
 }
 
 void Lagerdialog::ausfuehrenFunktion(FunktionsTyp funktion) {
@@ -63,7 +68,7 @@ void Lagerdialog::ausfuehrenFunktion(FunktionsTyp funktion) {
     double betrag;
     switch (funktion) {
         case ANLEGEN:
-            this->lager.addNewArtikel();
+            this->lager->addNewArtikel();
             break;
         case ZUGANG:
             cout << "Artikelnummer: ";
@@ -71,7 +76,7 @@ void Lagerdialog::ausfuehrenFunktion(FunktionsTyp funktion) {
             cout << endl << "Zugangsmenge : ";
             cin >> menge;
             cout << endl;
-            this->lager.bucheZugang(artikelnummer, menge);
+            this->lager->bucheZugang(artikelnummer, menge);
             break;
         case ABGANG:
             cout << "Artikelnummer: ";
@@ -79,22 +84,22 @@ void Lagerdialog::ausfuehrenFunktion(FunktionsTyp funktion) {
             cout << endl << "Abgangsmenge : ";
             cin >> menge;
             cout << endl;
-            this->lager.bucheAbgang(artikelnummer, menge);
+            this->lager->bucheAbgang(artikelnummer, menge);
             break;
         case LOESCHEN:
             cout << "Artikelnummer: ";
             cin >> artikelnummer;
             cout << endl;
-            this->lager.deleteArtikel(artikelnummer);
+            this->lager->deleteArtikel(artikelnummer);
             break;
         case PREISAENDERN:
             cout << endl << "Prozentuale Preisänderung: ";
             cin >> betrag;
             cout << endl;
-            this->lager.changePreis(betrag);
+            this->lager->changePreis(betrag);
             break;
         case ENDE:
-            this->lager.printLager();
+            this->lager->printLager();
             break;
         default:
             //ausfuehrenFunktion(einlesenFunktion()); //korrekt?

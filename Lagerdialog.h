@@ -23,8 +23,8 @@ public:
     void ausfuehrenFunktion(FunktionsTyp funktion);
 
 private:
-    Lager lager = Lager("Init", 199);
-    Lager newLager();
+    Lager* lager;
+    Lager* newLager();
 
 };
 

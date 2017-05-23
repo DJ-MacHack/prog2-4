@@ -41,18 +41,20 @@ string Artikeldialog::auswahl() {
  * @return neu
  */
 Artikel Artikeldialog::artikelErstellen() {
-    int nummer, menge, preis;
+    int nummer, menge;
+    double preis;
     string name;
     Artikel neu = Artikel(1000);
     do {
         cout << "Ihre vierstellige Artikelnummer:" << endl;
         cin >> nummer;
-        cout << "Ihr Artikelname:" << endl;
+        cout << endl << "Ihr Artikelname:" << endl;
         cin >> name;
-        cout << "Ihr Artikelbestand:" << endl;
+        cout << endl <<  "Ihr Artikelbestand:" << endl;
         cin >> menge;
-        cout << "Ihr Artikelpreis:" << endl;
+        cout << endl << "Ihr Artikelpreis:" << endl;
         cin >> preis;
+        cout << endl;
         try {
             neu = Artikel(nummer, name, menge, preis);
             return neu;

@@ -59,19 +59,19 @@ void Lager::deleteArtikel(Artikel artikel) {
 }
 
 void Lager::deleteArtikel(int artikelnummer) {
-    this->iter = lagermap.find(artikelnummer);
-    if (this->iter != lagermap.end()) {
+    map<int, Artikel>::iterator iter = this->lagermap.find(artikelnummer);
+    if (iter != lagermap.end()) {
         lagermap.erase(iter);
     } else {
         cout << "Artikel nicht gefunden!" << endl;
     }
 }
 
-string Lager::getName() {
+string Lager::getName() const{
     return this->name;
 }
 
-int Lager::getDimension() {
+int Lager::getDimension() const{
     return this->dimension;
 }
 
@@ -87,8 +87,8 @@ void Lager::bucheZugang(Artikel artikel, int menge) {
 }
 
 void Lager::bucheZugang(int artikelnummer, int menge) {
-    this->iter = lagermap.find(artikelnummer);
-    if (this->iter != lagermap.end()) {
+    map<int, Artikel>::iterator iter = this->lagermap.find(artikelnummer);
+    if (iter != lagermap.end()) {
         try {
             lagermap.at(artikelnummer).bucheZugang(menge);
         } catch (exception e) {
@@ -114,8 +114,8 @@ void Lager::bucheAbgang(Artikel artikel, int menge) {
 }
 
 void Lager::bucheAbgang(int artikelnummer, int menge) {
-    this->iter = lagermap.find(artikelnummer);
-    if (this->iter != lagermap.end()) {
+    map<int, Artikel>::iterator iter = this->lagermap.find(artikelnummer);
+    if (iter != lagermap.end()) {
         try {
             lagermap.at(artikelnummer).bucheAbgang(menge);
         } catch (exception e) {
@@ -130,16 +130,16 @@ void Lager::bucheAbgang(int artikelnummer, int menge) {
 }
 
 void Lager::changePreis(double prozent) {
-    for(this->iter = this->lagermap.begin(); iter != this->lagermap.end(); this->iter++){
-        double preis = this->iter.operator*().second.getPreis() * (prozent/100);
-        this->iter.operator*().second.setPreis(preis);
+    for(map<int, Artikel>::iterator iter = this->lagermap.begin(); iter != this->lagermap.end(); iter++){
+        double preis = iter.operator*().second.getPreis() * (prozent/100);
+        iter.operator*().second.setPreis(preis);
     }
 }
 
 void Lager::printLager() {
     Artikeldialog dialog;
-    for(this->iter = this->lagermap.begin(); iter != this->lagermap.end(); this->iter++){
-        dialog.artikelDatenAnzeigen(this->iter.operator*().second);
+    for(map<int, Artikel>::iterator iter = this->lagermap.begin(); iter != this->lagermap.end(); iter++){
+        dialog.artikelDatenAnzeigen(iter.operator*().second);
     }
 }
 

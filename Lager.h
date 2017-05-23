@@ -24,8 +24,8 @@ public:
     void addNewArtikel();
     void deleteArtikel(Artikel artikel);
     void deleteArtikel(int artikelnummer);
-    std::string getName();
-    int getDimension();
+    std::string getName() const;
+    int getDimension() const;
     void bucheZugang(Artikel artikel, int menge);
     void bucheZugang(int artikelnummer, int menge);
     void bucheAbgang(Artikel artikel, int menge);
@@ -38,10 +38,8 @@ private:
     Artikeldialog artikeldialog;
     std::string name;
     void setName(std::string name);
-    std::map<int, Artikel> lagermap;
-    std::map<int, Artikel>::iterator iter;
     void setDimension(int dimension);
-
+    std::map<int, Artikel> lagermap;
 };
 
 
