@@ -38,7 +38,6 @@ void Lagerdialog::start(){
         try {
             funktion = einlesenFunktion();
             ausfuehrenFunktion(funktion);
-
         } catch (const string& e) {
             cout << "Ausnahme: " << e << endl;
         }
@@ -100,6 +99,7 @@ void Lagerdialog::ausfuehrenFunktion(FunktionsTyp funktion) {
             break;
         case ENDE:
             this->lager->printLager();
+            this->lager->printCredits();
             break;
         default:
             //ausfuehrenFunktion(einlesenFunktion()); //korrekt?
@@ -108,7 +108,12 @@ void Lagerdialog::ausfuehrenFunktion(FunktionsTyp funktion) {
 }
 
 string Lagerdialog::toString() const {
-    ostringstream o;
+    //ostringstream o;
     //o << "Lager: " << name << '\n';
    // for (int i = 0; i < this->lager.getDimension(); i++) { o << kontoTab[i]->toString() << '\n'; } o << endl;
-    return o.str(); }
+    string out;
+    out += "Lager: " + this->lager->getName();
+    out += '\n';
+    out += this->lager->stringLager();
+    return out;
+}

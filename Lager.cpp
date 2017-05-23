@@ -138,9 +138,20 @@ void Lager::changePreis(double prozent) {
 
 void Lager::printLager() {
     Artikeldialog dialog;
+    cout << "Lagername: " << this->getName() << endl;
+    cout << "Lagerdimension: " << this->getDimension() << endl;
     for(map<int, Artikel>::iterator iter = this->lagermap.begin(); iter != this->lagermap.end(); iter++){
         dialog.artikelDatenAnzeigen(iter.operator*().second);
     }
+}
+
+string Lager::stringLager() {
+    Artikeldialog dialog;
+    string out = "";
+    for(map<int, Artikel>::iterator iter = this->lagermap.begin(); iter != this->lagermap.end(); iter++){
+        out += dialog.artikelDatenString(iter.operator*().second);
+    }
+    return out;
 }
 
 void Lager::setName(string name) {
@@ -161,6 +172,10 @@ void Lager::setDimension(int dimension) {
             this->dimension = dimension;
         }
     }
+}
+
+void Lager::printCredits()  {
+    this->artikeldialog.credits();
 }
 
 

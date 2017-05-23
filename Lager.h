@@ -32,6 +32,8 @@ public:
     void bucheAbgang(int artikelnummer, int menge);
     void changePreis(double prozent);
     void printLager();
+    std::string stringLager();
+    void printCredits();
 
 private:
     int dimension;
