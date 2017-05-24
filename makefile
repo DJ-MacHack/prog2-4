@@ -21,8 +21,8 @@ Artikel.o: Artikel.cpp Artikel.h
 
 .PHONY: clean
 clean:
-	$(RM) $(PR) *.o
+	$(RM) $(PR) *.o *.gch
 
 .PHONY: clear
 clear:
-	$(RM) *.o
+	$(RM) *.o *.gch
