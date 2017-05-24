@@ -10,8 +10,10 @@
 
 int main() {
     try {
-        Lagerdialog lagerdialog;
-        lagerdialog.start();
+        Lagerdialog* lagerdialog = new Lagerdialog();
+        lagerdialog->start();
+        delete lagerdialog;
+        lagerdialog = nullptr;
     } catch (const string& e) {
         cout << "Main: " << e << endl;
     }
@@ -21,4 +23,6 @@ int main() {
     catch (...) {
         cout << "Unbekannter Fehler!" << endl;
     }
+
+    return 0;
 }
