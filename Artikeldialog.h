@@ -17,7 +17,7 @@ public:
     void artikelDatenAnzeigen(const Artikel& artikel);
     std::string artikelDatenString(const Artikel &artikel);
     string auswahl();
-    Artikel artikelErstellen();
+    Artikel* artikelErstellen();
     void credits();
 
 private:

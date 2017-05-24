@@ -19,8 +19,8 @@ class Lager {
 public:
     Lager(std::string name, int dimension);
     Lager(int dimension);
-    void addArtikel(Artikel artikel);
-    Artikel newArtikel();
+    void addArtikel(Artikel* artikel);
+    Artikel* newArtikel();
     void addNewArtikel();
     void deleteArtikel(Artikel artikel);
     void deleteArtikel(int artikelnummer);
@@ -41,7 +41,7 @@ private:
     std::string name;
     void setName(std::string name);
     void setDimension(int dimension);
-    std::map<int, Artikel> lagermap;
+    std::map<int, Artikel*> lagermap;
 };
 
 

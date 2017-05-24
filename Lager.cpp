@@ -48,15 +48,15 @@ Lager::Lager(string name, int dimension) {
 
 Lager::Lager(int dimension) : Lager("Testname", dimension) {}
 
-void Lager::addArtikel(Artikel artikel) {
+void Lager::addArtikel(Artikel* artikel) {
     if(static_cast<int>(this->lagermap.size()) < this->dimension) {
-        this->lagermap.insert(pair<int, Artikel>(artikel.getArtikelnummer(), artikel));
+        this->lagermap.insert(pair<int, Artikel*>(artikel->getArtikelnummer(), artikel));
     } else {
         throw lagerVollExp;
     }
 }
 
-Artikel Lager::newArtikel() {
+Artikel* Lager::newArtikel() {
     return this->artikeldialog.artikelErstellen();
 }
 
@@ -69,9 +69,10 @@ void Lager::deleteArtikel(Artikel artikel) {
 }
 
 void Lager::deleteArtikel(int artikelnummer) {
-    map<int, Artikel>::iterator iter = this->lagermap.find(artikelnummer);
+    map<int, Artikel*>::iterator iter = this->lagermap.find(artikelnummer);
     if (iter != lagermap.end()) {
         lagermap.erase(iter);
+        delete iter->second;
     } else {
         cout << "Artikel nicht gefunden!" << endl;
     }
@@ -97,10 +98,10 @@ void Lager::bucheZugang(Artikel artikel, int menge) {
 }
 
 void Lager::bucheZugang(int artikelnummer, int menge) {
-    map<int, Artikel>::iterator iter = this->lagermap.find(artikelnummer);
+    map<int, Artikel*>::iterator iter = this->lagermap.find(artikelnummer);
     if (iter != lagermap.end()) {
         try {
-            lagermap.at(artikelnummer).bucheZugang(menge);
+            lagermap.at(artikelnummer)->bucheZugang(menge);
         } catch (exception e) {
             cout << e.what() << endl;
         }
@@ -124,10 +125,10 @@ void Lager::bucheAbgang(Artikel artikel, int menge) {
 }
 
 void Lager::bucheAbgang(int artikelnummer, int menge) {
-    map<int, Artikel>::iterator iter = this->lagermap.find(artikelnummer);
+    map<int, Artikel*>::iterator iter = this->lagermap.find(artikelnummer);
     if (iter != lagermap.end()) {
         try {
-            lagermap.at(artikelnummer).bucheAbgang(menge);
+            lagermap.at(artikelnummer)->bucheAbgang(menge);
         } catch (exception e) {
             cout << e.what() << endl;
         }
@@ -140,9 +141,9 @@ void Lager::bucheAbgang(int artikelnummer, int menge) {
 }
 
 void Lager::changePreis(double prozent) {
-    for(map<int, Artikel>::iterator iter = this->lagermap.begin(); iter != this->lagermap.end(); iter++){
-        double preis = iter.operator*().second.getPreis() * (prozent/100);
-        iter.operator*().second.setPreis(preis);
+    for(map<int, Artikel*>::iterator iter = this->lagermap.begin(); iter != this->lagermap.end(); iter++){
+        double preis = iter.operator*().second->getPreis() * (prozent/100);
+        iter.operator*().second->setPreis(preis);
     }
 }
 
@@ -150,17 +151,17 @@ void Lager::printLager() {
     Artikeldialog dialog;
     cout << "Lagername: " << this->getName() << endl;
     cout << "Lagerdimension: " << this->getDimension() << endl;
-    for(map<int, Artikel>::iterator iter = this->lagermap.begin(); iter != this->lagermap.end(); iter++){
-        const Artikel art = iter.operator*().second;
-        dialog.artikelDatenAnzeigen(art);
+    for(map<int, Artikel*>::iterator iter = this->lagermap.begin(); iter != this->lagermap.end(); iter++){
+        const Artikel* art = iter.operator*().second;
+        dialog.artikelDatenAnzeigen(*art);
     }
 }
 
 string Lager::stringLager() {
     Artikeldialog dialog;
     string out = "";
-    for(map<int, Artikel>::iterator iter = this->lagermap.begin(); iter != this->lagermap.end(); iter++){
-        out += dialog.artikelDatenString((iter.operator*().second));
+    for(map<int, Artikel*>::iterator iter = this->lagermap.begin(); iter != this->lagermap.end(); iter++){
+        out += dialog.artikelDatenString(*(iter.operator*().second));
     }
     return out;
 }

@@ -53,11 +53,11 @@ string Artikeldialog::auswahl() {
  * Erstellt Artikel aus der Benutzereingabe
  * @return neu
  */
-Artikel Artikeldialog::artikelErstellen() {
+Artikel* Artikeldialog::artikelErstellen() {
     int nummer, menge;
     double preis;
     string name;
-    Artikel neu = Artikel(1000);
+    Artikel* wrong = new Artikel(1000);
     do {
         cout << "Ihre vierstellige Artikelnummer:" << endl;
         cin >> nummer;
@@ -69,7 +69,7 @@ Artikel Artikeldialog::artikelErstellen() {
         cin >> preis;
         cout << endl;
         try {
-            neu = Artikel(nummer, name, menge, preis);
+            Artikel* neu = new Artikel(nummer, name, menge, preis);
             return neu;
         } catch (exception e) {
             e.what();
@@ -77,7 +77,7 @@ Artikel Artikeldialog::artikelErstellen() {
             else { cout << "Fehler bei der Eingabe!" << endl; }
         }
     } while (cin);
-    return neu;
+    return wrong;
 }
 
 /**
