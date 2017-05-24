@@ -41,7 +41,7 @@ private:
     std::string name;
     void setName(std::string name);
     void setDimension(int dimension);
-    std::map<int, Artikel> lagermap;
+    std::map<int, Artikel*> lagermap;
 };
 
 
