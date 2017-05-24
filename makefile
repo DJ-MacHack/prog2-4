@@ -1,6 +1,7 @@
 CC=gcc
 CXX=g++
 RM=rm -f
+PR=lager
 CPPFLAGS=-Wall -O2 -g -pedantic -std=c++14
 SRCS=main.cpp Lager.cpp Lager.h Lagerdialog.cpp Lagerdialog.h Artikel.cpp Artikel.h Artikeldialog.cpp Artikeldialog.h
 OBJS=$(subst .cc,.cpp,.h,.hh,.o,$(SRCS))
@@ -20,8 +21,8 @@ Artikel.o: Artikel.cpp Artikel.h
 
 .PHONY: clean
 clean:
-	rm -f arraytest *.o
+	$(RM) $(PR) *.o
 
 .PHONY: clear
 clear:
-	rm -f *.o
+	$(RM) *.o
