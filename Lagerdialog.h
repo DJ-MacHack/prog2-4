@@ -17,7 +17,6 @@ class Lagerdialog {
 public:
     Lagerdialog(Lager lager);
     Lagerdialog();
-    std::string toString() const;
     void start();
     FunktionsTyp einlesenFunktion();
     void ausfuehrenFunktion(FunktionsTyp funktion);

@@ -32,8 +32,10 @@ public:
     void bucheAbgang(int artikelnummer, int menge);
     void changePreis(double prozent);
     void printLager();
-    std::string stringLager();
+    std::string toString() const;
     void printCredits();
+
+    const map<int, Artikel *> &getLagermap() const;
 
 private:
     int dimension;

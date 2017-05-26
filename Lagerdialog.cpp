@@ -98,22 +98,11 @@ void Lagerdialog::ausfuehrenFunktion(FunktionsTyp funktion) {
             this->lager->changePreis(betrag);
             break;
         case ENDE:
-            this->lager->printLager();
+            cout << this->lager->toString() << endl;
             this->lager->printCredits();
             break;
         default:
             //ausfuehrenFunktion(einlesenFunktion()); //korrekt?
             break;
     }
-}
-
-string Lagerdialog::toString() const {
-    //ostringstream o;
-    //o << "Lager: " << name << '\n';
-   // for (int i = 0; i < this->lager.getDimension(); i++) { o << kontoTab[i]->toString() << '\n'; } o << endl;
-    string out;
-    out += "Lager: " + this->lager->getName();
-    out += '\n';
-    out += this->lager->stringLager();
-    return out;
 }

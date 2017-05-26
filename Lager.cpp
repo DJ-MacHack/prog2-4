@@ -6,6 +6,7 @@
 * mail@hendrik-haas.de
 */
 
+#include <sstream>
 #include "Lager.h"
 
 using namespace std;
@@ -140,6 +141,10 @@ void Lager::bucheAbgang(int artikelnummer, int menge) {
     }
 }
 
+const map<int, Artikel *> &Lager::getLagermap() const {
+    return lagermap;
+}
+
 void Lager::changePreis(double prozent) {
     for(map<int, Artikel*>::iterator iter = this->lagermap.begin(); iter != this->lagermap.end(); iter++){
         double preis = iter.operator*().second->getPreis() * (prozent/100);
@@ -157,13 +162,19 @@ void Lager::printLager() {
     }
 }
 
-string Lager::stringLager() {
-    Artikeldialog dialog;
-    string out = "";
-    for(map<int, Artikel*>::iterator iter = this->lagermap.begin(); iter != this->lagermap.end(); iter++){
-        out += dialog.artikelDatenString(*(iter.operator*().second));
-    }
-    return out;
+string Lager::toString() const {
+    ostringstream out;
+    out << "Lager: " << this->getName() << '\n';
+    out << "Dimension: " << this->getDimension() << '\n';
+
+    for (map<int, Artikel*>::const_iterator iter = this->getLagermap().begin(); iter != this->getLagermap().end(); iter++) {
+        out << "Artikelname: " << iter.operator*().second->getBezeichnung() << '\n';
+        out << "Artikelnummer: " << iter.operator*().second->getArtikelnummer() << '\n';
+        out << "Artikelbestand: " << iter.operator*().second->getBestand() << '\n';
+        out << "Artikelpreis: " << iter.operator*().second->getPreis() << '\n';
+    } out << endl;
+
+    return out.str();
 }
 
 void Lager::setName(string name) {
