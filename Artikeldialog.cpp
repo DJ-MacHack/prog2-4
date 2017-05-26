@@ -22,19 +22,6 @@ void Artikeldialog::artikelDatenAnzeigen(const Artikel &artikel) {
     cout << "Artikelpreis: " << artikel.getPreis() << endl;
 }
 
-string Artikeldialog::artikelDatenString(const Artikel &artikel) {
-    string out = "Artikelnummer: " + artikel.getArtikelnummer();
-    out += '\n';
-    out += "Artikelbezeichnung: " + artikel.getBezeichnung() ;
-    out += '\n';
-    out += "Artikelbestand: " + artikel.getBestand();
-    out += '\n';
-    out += "Artikelpreis: ";
-    out += artikel.getPreis();
-    out += '\n';
-    return out;
-}
-
 /**
  * Auswahlmenue
  * @return input
