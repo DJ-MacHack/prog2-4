@@ -150,10 +150,18 @@ void Artikel::setBestand(int menge) {
     this->bestand=menge;
 }
 
+/**
+ * Getter fuer Preis
+ * @return
+ */
 double Artikel::getPreis() const {
     return this->preis;
 }
 
+/**
+ * Setter fuer Preis
+ * @param preis
+ */
 void Artikel::setPreis(double preis) {
     if(preis < 0.0){
         throw preisexp;

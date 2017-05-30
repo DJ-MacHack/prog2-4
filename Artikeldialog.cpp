@@ -75,24 +75,24 @@ Artikel* Artikeldialog::artikelErstellen() {
  * in Kommentaren Code für Windows
  */
 void Artikeldialog::credits() {
-    std::ifstream inFile("credits.txt");
+    std::ifstream inFile ("credits.txt");
     std::string input = "";
     //inFile.open("credits.txt");
     if (inFile.is_open()) {
-        while (getline(inFile, input)) {
-            if (input.find("Q") != std::string::npos) {   //Ausgabe von find wenn nichts gefunden wird
+        while (getline (inFile,input)) {
+            if(input.find("Q") != std::string::npos){   //Ausgabe von find wenn nichts gefunden wird
                 std::vector<std::string> vector = split(input, 'Q');    //split
                 int teile = vector.size();
-                for (int i = 0; i < teile; i++) {
-                    if (vector.at(i) == "Q") {     //nur Q soll rot sein
+                for(int i = 0; i < teile; i++){
+                    if(vector.at(i)=="Q") {     //nur Q soll rot sein
 //                        HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
 //                        SetConsoleTextAttribute(handle, FOREGROUND_RED);
-                        cout << vector.at(i);
+                        cout << "\x1B[40m\x1B[5m\x1B[31m" + vector.at(i);
                     } else {
 //                        HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
 //                        SetConsoleTextAttribute(handle, FOREGROUND_INTENSITY | FOREGROUND_RED | FOREGROUND_GREEN |
 //                                                        FOREGROUND_BLUE);
-                        cout << vector.at(i);
+                        cout << "\x1B[0m\x1B[40m\x1B[37m"+vector.at(i);
                     }
                 }
                 cout << endl;
@@ -100,9 +100,10 @@ void Artikeldialog::credits() {
 //                HANDLE handle = GetStdHandle(STD_OUTPUT_HANDLE);
 //                SetConsoleTextAttribute(handle, FOREGROUND_INTENSITY | FOREGROUND_RED | FOREGROUND_GREEN |
 //                                                FOREGROUND_BLUE);
-                std::cout << input << std::endl;
+                std::cout << "\x1B[40m\x1B[37m"+input << std::endl;
             }
         }       //Datei schließen
+        cout << "\x1B[0m" <<endl;
         inFile.close();
     } else {
         cout << "Datei kann nicht geoeffnet werden!";

@@ -4,6 +4,7 @@
 * @date: 23.05.2017.
 * Matrnr.: 3747719
 * mail@hendrik-haas.de
+* Partner: Julian Bruna
 */
 
 #include <sstream>
@@ -11,6 +12,9 @@
 
 using namespace std;
 
+/**
+ * Exceptions
+ */
 class LeereException : public exception {
     virtual const char *what() const throw() {
         return "Leerer Name!";
@@ -35,20 +39,32 @@ class lagerVollException : public exception {
     }
 } lagerVollExp;
 
+class nichtDaException : public exception {
+    virtual const char *what() const throw() {
+        return "Artikel ist nicht im Lager!";
+    }
+} nichtDaExp;
+
+/**
+ * Constructor
+ * @param name
+ * @param dimension
+ */
 Lager::Lager(string name, int dimension) {
-    setDimension(dimension);
-    try {
+        setDimension(dimension);
         setName(name);
-    } catch (exception e) {
-        cout << e.what() << endl;
-    }
-    catch (...) {
-        cout << "Unbekannter Fehler beim Erstellen des Lagers!" << endl;
-    }
 }
 
+/**
+ * Constructor
+ * @param dimension
+ */
 Lager::Lager(int dimension) : Lager("Testname", dimension) {}
 
+/**
+ * Add an Artikel
+ * @param artikel
+ */
 void Lager::addArtikel(Artikel* artikel) {
     if(static_cast<int>(this->lagermap.size()) < this->dimension) {
         this->lagermap.insert(pair<int, Artikel*>(artikel->getArtikelnummer(), artikel));
@@ -57,18 +73,33 @@ void Lager::addArtikel(Artikel* artikel) {
     }
 }
 
+/**
+ * Create a new Artikel
+ * @return
+ */
 Artikel* Lager::newArtikel() {
     return this->artikeldialog.artikelErstellen();
 }
 
+/**
+ * Add new Artikel
+ */
 void Lager::addNewArtikel() {
     addArtikel(newArtikel());
 }
 
+/**
+ * delete Artikel
+ * @param artikel
+ */
 void Lager::deleteArtikel(Artikel artikel) {
     deleteArtikel(artikel.getArtikelnummer());
 }
 
+/**
+ * delete Artikel
+ * @param artikelnummer
+ */
 void Lager::deleteArtikel(int artikelnummer) {
     map<int, Artikel*>::iterator iter = this->lagermap.find(artikelnummer);
     if (iter != lagermap.end()) {
@@ -79,79 +110,101 @@ void Lager::deleteArtikel(int artikelnummer) {
     }
 }
 
+/**
+ * Getter Name
+ * @return
+ */
 string Lager::getName() const{
     return this->name;
 }
 
+/**
+ * Getter Dimension
+ * @return
+ */
 int Lager::getDimension() const{
     return this->dimension;
 }
 
+/**
+ * Add amount of pieces to Artikel
+ * @param artikel
+ * @param menge
+ */
 void Lager::bucheZugang(Artikel artikel, int menge) {
-    try {
-        bucheAbgang(artikel.getArtikelnummer(), menge);
-    } catch (exception e) {
-        cout << e.what() << endl;
+    map<int, Artikel*>::iterator iter = this->lagermap.find(artikel.getArtikelnummer());
+    if (iter != lagermap.end()) {
+        bucheZugang(artikel.getArtikelnummer(), menge);
+    } else {
+        throw nichtDaExp;
     }
-    catch (...) {
-        cout << "Unbekannter Fehler beim Buchen(Zugang)!" << endl;
-    }
+
 }
 
+/**
+ * Reduce amount of pieces from Artikel
+ * @param artikelnummer
+ * @param menge
+ */
 void Lager::bucheZugang(int artikelnummer, int menge) {
     map<int, Artikel*>::iterator iter = this->lagermap.find(artikelnummer);
     if (iter != lagermap.end()) {
-        try {
             lagermap.at(artikelnummer)->bucheZugang(menge);
-        } catch (exception e) {
-            cout << e.what() << endl;
-        }
-        catch (...) {
-            cout << "Unbekannter Fehler beim Buchen(Zugang)!" << endl;
-        }
     } else {
-        cout << "Artikel nicht gefunden!" << endl;
+        throw nichtDaExp;
     }
 }
 
+/**
+ * Reduce amount of pieces from Artikel
+ * @param artikel
+ * @param menge
+ */
 void Lager::bucheAbgang(Artikel artikel, int menge) {
-    try {
+    map<int, Artikel*>::iterator iter = this->lagermap.find(artikel.getArtikelnummer());
+    if (iter != lagermap.end()) {
         bucheAbgang(artikel.getArtikelnummer(), menge);
-    } catch (exception e) {
-        cout << e.what() << endl;
-    }
-    catch (...) {
-        cout << "Unbekannter Fehler beim Buchen(Abgang)!" << endl;
+    } else {
+        throw nichtDaExp;
     }
 }
 
+/**
+ * Reduce amount of pieces from Artikel
+ * @param artikelnummer
+ * @param menge
+ */
 void Lager::bucheAbgang(int artikelnummer, int menge) {
     map<int, Artikel*>::iterator iter = this->lagermap.find(artikelnummer);
     if (iter != lagermap.end()) {
-        try {
             lagermap.at(artikelnummer)->bucheAbgang(menge);
-        } catch (exception e) {
-            cout << e.what() << endl;
-        }
-        catch (...) {
-            cout << "Unbekannter Fehler beim Buchen(Abgang)!" << endl;
-        }
     } else {
-        cout << "Artikel nicht gefunden!" << endl;
+        throw nichtDaExp;
     }
 }
 
+/**
+ * Getter Lagermap
+ * @return
+ */
 const map<int, Artikel *> &Lager::getLagermap() const {
     return lagermap;
 }
 
+/**
+ * Change Preis
+ * @param prozent
+ */
 void Lager::changePreis(double prozent) {
     for(map<int, Artikel*>::iterator iter = this->lagermap.begin(); iter != this->lagermap.end(); iter++){
-        double preis = iter.operator*().second->getPreis() * (prozent/100);
+        double preis = iter.operator*().second->getPreis() * ( 1 + (prozent/100));
         iter.operator*().second->setPreis(preis);
     }
 }
 
+/**
+ * Print Lager in cout
+ */
 void Lager::printLager() {
     Artikeldialog dialog;
     cout << "Lagername: " << this->getName() << endl;
@@ -162,6 +215,10 @@ void Lager::printLager() {
     }
 }
 
+/**
+ * Lager to string
+ * @return
+ */
 string Lager::toString() const {
     ostringstream out;
     out << "Lager: " << this->getName() << '\n';
@@ -177,6 +234,10 @@ string Lager::toString() const {
     return out.str();
 }
 
+/**
+ * Setter Name
+ * @param name
+ */
 void Lager::setName(string name) {
     if (name == "") {
         throw leeresLagerExp;
@@ -185,6 +246,10 @@ void Lager::setName(string name) {
     }
 }
 
+/**
+ * Setter Dimension
+ * @param dimension
+ */
 void Lager::setDimension(int dimension) {
     if (dimension == 0) {
         throw nullDimExp;
@@ -197,6 +262,9 @@ void Lager::setDimension(int dimension) {
     }
 }
 
+/**
+ * Prints my awesome credits
+ */
 void Lager::printCredits()  {
     this->artikeldialog.credits();
 }

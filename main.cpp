@@ -6,8 +6,13 @@
 * @date: 23.05.2017.
 * Matrnr.: 3747719
 * mail@hendrik-haas.de
+* Partner: Julian Bruna
 */
 
+/**
+ * Main function
+ * @return
+ */
 int main() {
     try {
         Lagerdialog* lagerdialog = new Lagerdialog();

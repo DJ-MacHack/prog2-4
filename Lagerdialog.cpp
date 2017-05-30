@@ -4,22 +4,42 @@
 * @date: 23.05.2017.
 * Matrnr.: 3747719
 * mail@hendrik-haas.de
+* Partner: Julian Bruna
 */
 
 #include <sstream>
 #include "Lagerdialog.h"
+
 using namespace std;
 
-Lagerdialog::Lagerdialog(Lager lager){
+/**
+ * Constructor
+ * @param lager
+ */
+Lagerdialog::Lagerdialog(Lager lager) {
     this->lager = &lager;
 }
 
-Lagerdialog::Lagerdialog(){
-    Lager* lager = newLager();
-    this->lager = lager;
+/**
+ * Constructor
+ */
+Lagerdialog::Lagerdialog() {
+    try {
+        Lager *lager = newLager();
+        this->lager = lager;
+    } catch (exception e) {
+        cout << e.what() << endl;
+    }
+    catch (...) {
+        cout << "Unbekannter Fehler beim Erstellen des Lagers!" << endl;
+    }
 }
 
-Lager* Lagerdialog::newLager(){
+/**
+ * Creates a new Lager
+ * @return
+ */
+Lager *Lagerdialog::newLager() {
     string name;
     int dimensionen;
     cout << "Name fuer das neue Lager: ";
@@ -28,22 +48,36 @@ Lager* Lagerdialog::newLager(){
     cout << "Dimensionen fuer das neue Lager: ";
     cin >> dimensionen;
     cout << endl;
-    Lager* lager = new Lager(name, dimensionen);
+    Lager *lager;
+    lager = new Lager(name, dimensionen);
     return lager;
 }
 
-void Lagerdialog::start(){
+/**
+ * Dialogue funktion
+ */
+void Lagerdialog::start() {
     FunktionsTyp funktion;
     do {
         try {
             funktion = einlesenFunktion();
             ausfuehrenFunktion(funktion);
-        } catch (const string& e) {
+        } catch (const string &e) {
             cout << "Ausnahme: " << e << endl;
+        } catch (exception e) {
+            cout << e.what() << endl;
         }
+        catch (...) {
+            cout << "Unbekannter Fehler Ausfuehren!" << endl;
+        }
+
     } while (funktion != ENDE);
 }
 
+/**
+ * Reads command from cin
+ * @return
+ */
 FunktionsTyp Lagerdialog::einlesenFunktion() {
     cout << ANLEGEN << ": anlegen; "
          << ZUGANG << ": Zugang buchen; "
@@ -52,7 +86,7 @@ FunktionsTyp Lagerdialog::einlesenFunktion() {
          << PREISAENDERN << ": Preis aendern; "
          << ENDE << ": beenden -> ";
     int funktion;
-    if(cin) {
+    if (cin) {
         cin >> funktion;
         cout << endl;
         return static_cast<FunktionsTyp>(funktion);
@@ -62,6 +96,10 @@ FunktionsTyp Lagerdialog::einlesenFunktion() {
     }
 }
 
+/**
+ * Execs command
+ * @param funktion
+ */
 void Lagerdialog::ausfuehrenFunktion(FunktionsTyp funktion) {
     int artikelnummer, menge;
     double betrag;
@@ -102,7 +140,6 @@ void Lagerdialog::ausfuehrenFunktion(FunktionsTyp funktion) {
             this->lager->printCredits();
             break;
         default:
-            //ausfuehrenFunktion(einlesenFunktion()); //korrekt?
             break;
     }
 }
