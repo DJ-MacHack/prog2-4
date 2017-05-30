@@ -1,0 +1,94 @@
+#include "mainwindow.h"
+#include "ui_mainwindow.h"
+#include "Lagerdialog.h"
+#include <QPushButton>
+#include <QAction>
+#include <QDir>
+#include <QInputDialog>
+
+MainWindow::MainWindow(QWidget *parent) :
+    QMainWindow(parent),
+    ui(new Ui::MainWindow)
+{
+    ui->setupUi(this);
+    connect(ui->actionBeenden, &QAction::triggered, this, &MainWindow::close);
+    connect(ui->actionNeues_Lager, &QAction::triggered, this, &MainWindow::newLager);
+   // connect(ui->pushButton, SIGNAL (clicked()), this, SLOT (textInput()));
+    this->getTextBrowser()->setText("Legen Sie ein neues Lager an!");
+}
+
+void MainWindow::dialog() {
+    try {
+            Lagerdialog* lagerdialog = new Lagerdialog(this, this->lager);
+            lagerdialog->start();
+            delete lagerdialog;
+            lagerdialog = nullptr;
+        } catch (const string& e) {
+        string text = "Ausnahme: " + e;
+        this-getTextBrowser()->setText(QString::fromStdString(text));
+    } catch(exception e) {
+        this->getTextBrowser()->setText(QString::fromStdString(e.what()));
+    } catch(...) {
+        this->getTextBrowser()->setText("Unbekannter Fehler beim Lagerdialog.");
+    }
+}
+
+void MainWindow::newLager(){
+    std::string name;
+    getLager();
+    int dim = 0;
+    bool ok;
+    name = QInputDialog::getText(this, tr("QInputDialog::getText()"),
+                                 tr("Name des Lagers:"), QLineEdit::Normal,
+                                 QDir::home().dirName(), &ok).toStdString();
+    dim = QInputDialog::getInt(0, "Dimension", "Dimension des Lagers:", 1);
+    try{
+    Lager* lager = new Lager(name, dim);
+    this->lager = lager;
+    if(name != "" && dim > 0) {
+        this->getTextBrowser()->setText("Lager wurde angelegt!");
+    }
+    } catch(exception e) {
+        this->getTextBrowser()->setText(e.what());
+    } catch(...){
+        this->getTextBrowser()->setText("Unbekannter Fehler beim Anlegen!");
+    }
+
+    this->inputint = dim;
+    this->inputtext = name;
+    if(this->lager != nptr){
+        dialog();
+    }
+}
+
+void MainWindow::getLager(){
+    QString qs = QString("Lager wird angelegt.");
+    this->getTextBrowser()->setText(qs);
+}
+
+void MainWindow::getDouble(){
+
+}
+
+
+std::string MainWindow::getInputString() const {
+    return this->inputtext;
+}
+
+QTextBrowser* MainWindow::getTextBrowser() {
+    return ui->textBrowser;
+}
+
+int MainWindow::getInputInt() const {
+    return this->inputint;
+}
+
+double MainWindow::getInputDouble() const {
+    return this->inputdouble;
+}
+
+
+MainWindow::~MainWindow()
+{
+    delete ui;
+}
