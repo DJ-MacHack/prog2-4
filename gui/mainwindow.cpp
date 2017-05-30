@@ -13,23 +13,26 @@ MainWindow::MainWindow(QWidget *parent) :
     ui->setupUi(this);
     connect(ui->actionBeenden, &QAction::triggered, this, &MainWindow::close);
     connect(ui->actionNeues_Lager, &QAction::triggered, this, &MainWindow::newLager);
+    //connect(ui->actionLager_weiter_bearbeiten, &QAction::triggered, this, &MainWindow::dialog);
    // connect(ui->pushButton, SIGNAL (clicked()), this, SLOT (textInput()));
-    this->getTextBrowser()->setText("Legen Sie ein neues Lager an! STRG + N \nBeenden: STRG + B");
+    this->getTextBrowser()->setText("Legen Sie ein neues Lager an: STRG + N \nLager weiter bearbeiten: STRG + W \nBeenden: STRG + B");
 }
 
 void MainWindow::dialog() {
+//    if(this->lager == nullptr){
+//        newLager();
+//    }
     try {
             Lagerdialog* lagerdialog = new Lagerdialog(this->lager, this);
+            if(lagerdialog != nullptr){
             lagerdialog->start();
             delete lagerdialog;
             lagerdialog = nullptr;
-        } catch (const string& e) {
-        std::string text = "Ausnahme: " + e;
-        this->getTextBrowser()->setText(QString::fromStdString(text));
-    } catch(exception e) {
-        this->getTextBrowser()->setText(QString::fromStdString(e.what()));
+            }
+        } catch(exception e) {
+           this->getTextBrowser2()->setText(QString::fromStdString(e.what()));
     } catch(...) {
-        this->getTextBrowser()->setText("Unbekannter Fehler beim Lagerdialog.");
+        this->getTextBrowser2()->setText(QString::fromStdString("Unbekannter Fehler beim Lagerdialog."));
     }
 }
 
@@ -49,14 +52,15 @@ void MainWindow::newLager(){
         this->getTextBrowser()->setText("Lager wurde angelegt!");
     }
     } catch(exception e) {
-        this->getTextBrowser()->setText(e.what());
+        this->getTextBrowser2()->setText(e.what());
     } catch(...){
-        this->getTextBrowser()->setText("Unbekannter Fehler beim Anlegen!");
+        this->getTextBrowser2()->setText("Unbekannter Fehler beim Anlegen!");
     }
 
     this->inputint = dim;
     this->inputtext = name;
     if(this->lager != nullptr){
+        connect(ui->actionLager_weiter_bearbeiten, &QAction::triggered, this, &MainWindow::dialog);
         dialog();
     }
 }
@@ -77,6 +81,10 @@ std::string MainWindow::getInputString() const {
 
 QTextBrowser* MainWindow::getTextBrowser() {
     return ui->textBrowser;
+}
+
+QTextBrowser* MainWindow::getTextBrowser2() {
+    return ui->textBrowser_2;
 }
 
 int MainWindow::getInputInt() const {

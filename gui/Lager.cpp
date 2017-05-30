@@ -35,16 +35,15 @@ class lagerVollException : public exception {
     }
 } lagerVollExp;
 
+class nichtDaException : public exception {
+    virtual const char *what() const throw() {
+        return "Artikel ist nicht im Lager!";
+    }
+} nichtDaExp;
+
 Lager::Lager(string name, int dimension) {
     setDimension(dimension);
-    try {
         setName(name);
-    } catch (exception e) {
-        cout << e.what() << endl;
-    }
-    catch (...) {
-        cout << "Unbekannter Fehler beim Erstellen des Lagers!" << endl;
-    }
 }
 
 Lager::Lager(int dimension) : Lager("Testname", dimension) {}
@@ -75,7 +74,7 @@ void Lager::deleteArtikel(int artikelnummer) {
         lagermap.erase(iter);
         delete iter->second;
     } else {
-        cout << "Artikel nicht gefunden!" << endl;
+        throw nichtDaExp;
     }
 }
 
@@ -88,57 +87,32 @@ int Lager::getDimension() const{
 }
 
 void Lager::bucheZugang(Artikel artikel, int menge) {
-    try {
+
         bucheAbgang(artikel.getArtikelnummer(), menge);
-    } catch (exception e) {
-        cout << e.what() << endl;
-    }
-    catch (...) {
-        cout << "Unbekannter Fehler beim Buchen(Zugang)!" << endl;
-    }
+
 }
 
 void Lager::bucheZugang(int artikelnummer, int menge) {
     map<int, Artikel*>::iterator iter = this->lagermap.find(artikelnummer);
     if (iter != lagermap.end()) {
-        try {
             lagermap.at(artikelnummer)->bucheZugang(menge);
-        } catch (exception e) {
-            cout << e.what() << endl;
-        }
-        catch (...) {
-            cout << "Unbekannter Fehler beim Buchen(Zugang)!" << endl;
-        }
     } else {
-        cout << "Artikel nicht gefunden!" << endl;
+        throw nichtDaExp;
     }
 }
 
 void Lager::bucheAbgang(Artikel artikel, int menge) {
-    try {
         bucheAbgang(artikel.getArtikelnummer(), menge);
-    } catch (exception e) {
-        cout << e.what() << endl;
-    }
-    catch (...) {
-        cout << "Unbekannter Fehler beim Buchen(Abgang)!" << endl;
-    }
 }
 
 void Lager::bucheAbgang(int artikelnummer, int menge) {
     map<int, Artikel*>::iterator iter = this->lagermap.find(artikelnummer);
     if (iter != lagermap.end()) {
-        try {
-            lagermap.at(artikelnummer)->bucheAbgang(menge);
-        } catch (exception e) {
-            cout << e.what() << endl;
-        }
-        catch (...) {
-            cout << "Unbekannter Fehler beim Buchen(Abgang)!" << endl;
-        }
-    } else {
-        cout << "Artikel nicht gefunden!" << endl;
+        lagermap.at(artikelnummer)->bucheAbgang(menge);
     }
+    else {
+            throw nichtDaExp;
+        }
 }
 
 const map<int, Artikel *> &Lager::getLagermap() const {

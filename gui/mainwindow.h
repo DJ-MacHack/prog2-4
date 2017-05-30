@@ -19,6 +19,7 @@ public:
     double getInputDouble() const;
     int getInputInt() const;
     QTextBrowser* getTextBrowser();
+    QTextBrowser* getTextBrowser2();
     void dialog();
     void newLager();
     void getLager();

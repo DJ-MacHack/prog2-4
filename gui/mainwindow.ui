@@ -27,7 +27,17 @@
       <x>0</x>
       <y>0</y>
       <width>571</width>
-      <height>221</height>
+      <height>211</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QTextBrowser" name="textBrowser_2">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>230</y>
+      <width>571</width>
+      <height>201</height>
      </rect>
     </property>
    </widget>
@@ -47,6 +57,7 @@
     </property>
     <addaction name="actionBeenden"/>
     <addaction name="actionNeues_Lager"/>
+    <addaction name="actionLager_weiter_bearbeiten"/>
    </widget>
    <addaction name="menuMen"/>
   </widget>
@@ -73,6 +84,14 @@
    </property>
    <property name="shortcut">
     <string>Ctrl+N</string>
+   </property>
+  </action>
+  <action name="actionLager_weiter_bearbeiten">
+   <property name="text">
+    <string>Lager weiter bearbeiten</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+W</string>
    </property>
   </action>
  </widget>

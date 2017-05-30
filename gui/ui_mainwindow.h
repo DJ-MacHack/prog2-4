@@ -29,8 +29,10 @@ class Ui_MainWindow
 public:
     QAction *actionBeenden;
     QAction *actionNeues_Lager;
+    QAction *actionLager_weiter_bearbeiten;
     QWidget *centralWidget;
     QTextBrowser *textBrowser;
+    QTextBrowser *textBrowser_2;
     QMenuBar *menuBar;
     QMenu *menuMen;
     QToolBar *mainToolBar;
@@ -48,12 +50,17 @@ public:
         actionBeenden->setObjectName(QStringLiteral("actionBeenden"));
         actionNeues_Lager = new QAction(MainWindow);
         actionNeues_Lager->setObjectName(QStringLiteral("actionNeues_Lager"));
+        actionLager_weiter_bearbeiten = new QAction(MainWindow);
+        actionLager_weiter_bearbeiten->setObjectName(QStringLiteral("actionLager_weiter_bearbeiten"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         centralWidget->setCursor(QCursor(Qt::ArrowCursor));
         textBrowser = new QTextBrowser(centralWidget);
         textBrowser->setObjectName(QStringLiteral("textBrowser"));
         textBrowser->setGeometry(QRect(0, 0, 571, 221));
+        textBrowser_2 = new QTextBrowser(centralWidget);
+        textBrowser_2->setObjectName(QStringLiteral("textBrowser_2"));
+        textBrowser_2->setGeometry(QRect(0, 231, 571, 201));
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
@@ -71,6 +78,7 @@ public:
         menuBar->addAction(menuMen->menuAction());
         menuMen->addAction(actionBeenden);
         menuMen->addAction(actionNeues_Lager);
+        menuMen->addAction(actionLager_weiter_bearbeiten);
 
         retranslateUi(MainWindow);
 
@@ -87,6 +95,10 @@ public:
         actionNeues_Lager->setText(QApplication::translate("MainWindow", "Neues Lager", Q_NULLPTR));
 #ifndef QT_NO_SHORTCUT
         actionNeues_Lager->setShortcut(QApplication::translate("MainWindow", "Ctrl+N", Q_NULLPTR));
+#endif // QT_NO_SHORTCUT
+        actionLager_weiter_bearbeiten->setText(QApplication::translate("MainWindow", "Lager weiter bearbeiten", Q_NULLPTR));
+#ifndef QT_NO_SHORTCUT
+        actionLager_weiter_bearbeiten->setShortcut(QApplication::translate("MainWindow", "Ctrl+W", Q_NULLPTR));
 #endif // QT_NO_SHORTCUT
         menuMen->setTitle(QApplication::translate("MainWindow", "Men\303\274", Q_NULLPTR));
     } // retranslateUi

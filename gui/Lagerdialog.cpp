@@ -53,11 +53,11 @@ void Lagerdialog::start(){
             }
         } catch (const string& e) {
             string text = "Ausnahme: " + e;
-            this->wd->getTextBrowser()->setText(QString::fromStdString(text));
+            this->wd->getTextBrowser2()->setText(QString::fromStdString(text));
         } catch(exception e) {
-            this->wd->getTextBrowser()->setText(QString::fromStdString(e.what()));
+            this->wd->getTextBrowser2()->setText(QString::fromStdString(e.what()));
         } catch(...) {
-            this->wd->getTextBrowser()->setText("Unbekannter Fehler beim Lagerdialog.");
+            this->wd->getTextBrowser2()->setText(QString::fromStdString("Unbekannter Fehler beim Lagerdialog."));
         }
     } while (funktion != ENDE);
 }
