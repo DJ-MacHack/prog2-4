@@ -57,7 +57,7 @@ Lager *Lagerdialog::newLager() {
  * Dialogue funktion
  */
 void Lagerdialog::start() {
-    FunktionsTyp funktion;
+    FunktionsTyp funktion = WEITER;
     do {
         try {
             funktion = einlesenFunktion();
