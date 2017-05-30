@@ -86,12 +86,26 @@ int Lager::getDimension() const{
     return this->dimension;
 }
 
+/**
+ * Add amount of pieces to Artikel
+ * @param artikel
+ * @param menge
+ */
 void Lager::bucheZugang(Artikel artikel, int menge) {
-
-        bucheAbgang(artikel.getArtikelnummer(), menge);
+    map<int, Artikel*>::iterator iter = this->lagermap.find(artikel.getArtikelnummer());
+    if (iter != lagermap.end()) {
+        bucheZugang(artikel.getArtikelnummer(), menge);
+    } else {
+        throw nichtDaExp;
+    }
 
 }
 
+/**
+ * Reduce amount of pieces from Artikel
+ * @param artikelnummer
+ * @param menge
+ */
 void Lager::bucheZugang(int artikelnummer, int menge) {
     map<int, Artikel*>::iterator iter = this->lagermap.find(artikelnummer);
     if (iter != lagermap.end()) {
@@ -101,27 +115,40 @@ void Lager::bucheZugang(int artikelnummer, int menge) {
     }
 }
 
+/**
+ * Reduce amount of pieces from Artikel
+ * @param artikel
+ * @param menge
+ */
 void Lager::bucheAbgang(Artikel artikel, int menge) {
+    map<int, Artikel*>::iterator iter = this->lagermap.find(artikel.getArtikelnummer());
+    if (iter != lagermap.end()) {
         bucheAbgang(artikel.getArtikelnummer(), menge);
+    } else {
+        throw nichtDaExp;
+    }
 }
 
+/**
+ * Reduce amount of pieces from Artikel
+ * @param artikelnummer
+ * @param menge
+ */
 void Lager::bucheAbgang(int artikelnummer, int menge) {
     map<int, Artikel*>::iterator iter = this->lagermap.find(artikelnummer);
     if (iter != lagermap.end()) {
-        lagermap.at(artikelnummer)->bucheAbgang(menge);
+            lagermap.at(artikelnummer)->bucheAbgang(menge);
+    } else {
+        throw nichtDaExp;
     }
-    else {
-            throw nichtDaExp;
-        }
 }
-
 const map<int, Artikel *> &Lager::getLagermap() const {
     return lagermap;
 }
 
 void Lager::changePreis(double prozent) {
     for(map<int, Artikel*>::iterator iter = this->lagermap.begin(); iter != this->lagermap.end(); iter++){
-        double preis = iter.operator*().second->getPreis() * (prozent/100);
+        double preis = iter.operator*().second->getPreis() * (1 + (prozent/100));
         iter.operator*().second->setPreis(preis);
     }
 }
