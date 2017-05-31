@@ -16,7 +16,7 @@
 #include <ui_mainwindow.h>
 
 enum FunktionsTyp {WEITER = 0, ANLEGEN = 1, ZUGANG = 2, ABGANG = 3,
-    PREISAENDERN = 4, LOESCHEN = 5, AUSGEBEN = 6, ENDE = 9};
+     LOESCHEN = 4, PREISAENDERN = 5, AUSGEBEN = 6, ENDE = 9};
 class Lagerdialog {
 public:
     Lagerdialog(Lager* lager, MainWindow* wd);
