@@ -148,7 +148,7 @@ void Lager::deleteArtikel(int artikelnummer) {
         lagermap.erase(iter);
         delete iter->second;
     } else {
-        cout << "Artikel nicht gefunden!" << endl;
+        throw nichtDaExp;
     }
 }
 
