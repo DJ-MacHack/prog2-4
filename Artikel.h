@@ -13,7 +13,8 @@ using namespace std;
 
 class Artikel {
 
-public: Artikel(int nummer, string name, int menge, double preis);
+public: Artikel(const Artikel& artikel);
+        Artikel(int nummer, string name, int menge, double preis);
         Artikel(int nummer, string name);
         Artikel(int nummer);
         void bucheZugang(int menge);
@@ -24,6 +25,7 @@ public: Artikel(int nummer, string name, int menge, double preis);
         int getArtikelnummer() const;
         double getPreis() const;
         void setPreis(double preis);
+    Artikel& operator=(const Artikel& Artikel);
 
 private:
         int bestand;

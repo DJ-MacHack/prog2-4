@@ -17,6 +17,13 @@
 
 class Lager {
 public:
+    static const std::string LEERES_LAGER;
+    static const std::string NEGATIVE_DIM;
+    static const std::string NULL_DIM;
+    static const std::string VOLLES_LAGER;
+    static const std::string NICHT_DA;
+    static const std::string SCHON_DA;
+    Lager(const Lager& lager);
     Lager(std::string name, int dimension);
     Lager(int dimension);
     void addArtikel(Artikel* artikel);
@@ -34,13 +41,16 @@ public:
     void printLager();
     std::string toString() const;
     void printCredits();
-
+    Lager& operator=(const Lager& lager);
     const map<int, Artikel *> &getLagermap() const;
+
+    virtual ~Lager();
 
 private:
     int dimension;
     Artikeldialog artikeldialog;
     std::string name;
+    void loescheArtikel();
     void setName(std::string name);
     void setDimension(int dimension);
     std::map<int, Artikel*> lagermap;

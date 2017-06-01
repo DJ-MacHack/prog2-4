@@ -12,6 +12,11 @@
 #include "Artikeldialog.h"
 
 /**
+ * Default deconstructor
+ */
+Artikeldialog::~Artikeldialog() {}
+
+/**
  * Gibt den Artikel in der Konsole aus
  * @param artikel
  */

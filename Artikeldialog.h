@@ -19,6 +19,8 @@ public:
     Artikel* artikelErstellen();
     void credits();
 
+    virtual ~Artikeldialog();
+
 private:
     vector<string>split(string str, char delimiter);
 };

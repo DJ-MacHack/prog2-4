@@ -12,6 +12,24 @@
 
 using namespace std;
 
+
+/**
+ * Destructor
+ */
+Lager::~Lager() {
+    loescheArtikel();
+}
+
+/**
+ * Not needed cause of my exceptions
+ */
+const string Lager::LEERES_LAGER = "Leerer Name!";
+const string Lager::NEGATIVE_DIM = "Negative Dimension!";
+const string Lager::NULL_DIM = "Dimension muss > 0 sein!";
+const string Lager::VOLLES_LAGER = "Lager ist voll!";
+const string Lager::NICHT_DA = "Artikel ist nicht im Lager!";
+const string Lager::SCHON_DA = "Artikel ist schon im Lager!";
+
 /**
  * Exceptions
  */
@@ -45,6 +63,12 @@ class nichtDaException : public exception {
     }
 } nichtDaExp;
 
+class inLagerException : public exception {
+    virtual const char *what() const throw() {
+        return "Artikel ist schon im Lager!";
+    }
+} inLagerExp;
+
 /**
  * Constructor
  * @param name
@@ -53,6 +77,19 @@ class nichtDaException : public exception {
 Lager::Lager(string name, int dimension) {
         setDimension(dimension);
         setName(name);
+}
+
+/**
+ * Copy constructor
+ * @param lager
+ */
+Lager::Lager(const Lager& lager){
+    setDimension(lager.getDimension());
+    setName(lager.getName());
+    map<int, Artikel*> tmp = lager.getLagermap();
+    for(map<int, Artikel*>::iterator iter = tmp.begin(); iter != tmp.end(); iter++){
+        addArtikel(iter.operator*().second);
+    }
 }
 
 /**
@@ -67,7 +104,12 @@ Lager::Lager(int dimension) : Lager("Testname", dimension) {}
  */
 void Lager::addArtikel(Artikel* artikel) {
     if(static_cast<int>(this->lagermap.size()) < this->dimension) {
-        this->lagermap.insert(pair<int, Artikel*>(artikel->getArtikelnummer(), artikel));
+        map<int, Artikel*>::iterator iter = this->lagermap.find(artikel->getArtikelnummer());
+        if (iter == lagermap.end()) {
+            this->lagermap.insert(pair<int, Artikel *>(artikel->getArtikelnummer(), artikel));
+        } else {
+            throw inLagerExp;
+        }
     } else {
         throw lagerVollExp;
     }
@@ -222,7 +264,7 @@ void Lager::printLager() {
 string Lager::toString() const {
     ostringstream out;
     out << "Lager: " << this->getName() << '\n';
-    out << "Dimension: " << this->getDimension() << '\n';
+    out << "Dimension: " << this->getDimension() << '\n' << '\n';
 
     for (map<int, Artikel*>::const_iterator iter = this->getLagermap().begin(); iter != this->getLagermap().end(); iter++) {
         out << "Artikelname: " << iter.operator*().second->getBezeichnung() << '\n';
@@ -269,4 +311,34 @@ void Lager::printCredits()  {
     this->artikeldialog.credits();
 }
 
+/**
+ * deletes all artikels cleanly
+ */
+void Lager::loescheArtikel() {
+    for(map<int, Artikel*>::iterator iter = this->lagermap.begin(); iter != this->lagermap.end(); iter++){
+        delete iter.operator*().second;
+        iter.operator*().second = nullptr;
+    }
+}
+
+/**
+ * Operator =
+ * @param lager
+ * @return
+ */
+Lager& Lager::operator=(const Lager& lager){
+    if(this == &lager){
+        return *this;
+    }
+
+    setName(lager.getName());
+    setDimension(lager.getDimension());
+    loescheArtikel();
+    map<int,Artikel*> tmp = lager.getLagermap();
+    for(map<int, Artikel*>::iterator iter = tmp.begin(); iter != tmp.end(); iter++){
+        addArtikel(iter.operator*().second);
+    }
+
+    return *this;
+}
 

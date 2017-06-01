@@ -21,6 +21,8 @@ public:
     FunktionsTyp einlesenFunktion();
     void ausfuehrenFunktion(FunktionsTyp funktion);
 
+    virtual ~Lagerdialog();
+
 private:
     Lager* lager;
     Lager* newLager();

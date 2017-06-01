@@ -44,6 +44,16 @@ class preisException: public exception {
     }
 } preisexp;
 
+/**
+ * Copyconstructor
+ * @param artikel
+ */
+Artikel::Artikel(const Artikel& artikel){
+    setArtikelnummer(artikel.getArtikelnummer());
+    setBestand(artikel.getBestand());
+    setPreis(artikel.getPreis());
+    setBezeichnung(artikel.getBezeichnung());
+}
 
 /**
  * Hauptkonstruktor, der (private) Methoden, die auch ueberpruefen, aufruft
@@ -168,4 +178,20 @@ void Artikel::setPreis(double preis) {
     } else {
         this->preis = preis;
     }
+}
+
+/**
+ * Operator =
+ * @param artikel
+ * @return
+ */
+Artikel& Artikel::operator=(const Artikel& artikel){
+    if(this==&artikel){
+        return *this;
+    }
+    setBezeichnung(artikel.getBezeichnung());
+    setPreis(artikel.getPreis());
+    setBestand(artikel.getBestand());
+    setArtikelnummer(artikel.getArtikelnummer());
+    return *this;
 }

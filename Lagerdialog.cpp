@@ -21,6 +21,14 @@ Lagerdialog::Lagerdialog(Lager lager) {
 }
 
 /**
+ * Deconstructor
+ */
+Lagerdialog::~Lagerdialog() {
+    delete this->lager;
+    this->lager = nullptr;
+}
+
+/**
  * Constructor
  */
 Lagerdialog::Lagerdialog() {
