@@ -14,9 +14,22 @@
  * @return
  */
 int main() {
-    try {
-        Lagerdialog* lagerdialog = new Lagerdialog();
-        if(lagerdialog != nullptr) {
+    Lagerdialog* lagerdialog = nullptr;
+    do {
+        try {
+            lagerdialog = new Lagerdialog();
+        } catch (const string &e) {
+            cout << "Main: " << e << endl;
+        }
+        catch (exception &e) {
+            cout << e.what() << endl;
+        }
+        catch (...) {
+            cout << "Unbekannter Fehler!" << endl;
+        }
+    } while(lagerdialog == nullptr);
+    try{
+    if(lagerdialog != nullptr) {
             lagerdialog->start();
             delete lagerdialog;
             lagerdialog = nullptr;
