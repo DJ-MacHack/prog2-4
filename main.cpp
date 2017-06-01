@@ -24,7 +24,7 @@ int main() {
     } catch (const string& e) {
         cout << "Main: " << e << endl;
     }
-    catch (exception e){
+    catch (exception &e){
         cout << e.what() << endl;
     }
     catch (...) {
