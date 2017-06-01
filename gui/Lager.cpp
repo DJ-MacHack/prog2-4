@@ -41,6 +41,12 @@ class nichtDaException : public exception {
     }
 } nichtDaExp;
 
+class inLagerException : public exception {
+    virtual const char *what() const throw() {
+        return "Artikel ist schon im Lager!";
+    }
+} inLagerExp;
+
 Lager::Lager(string name, int dimension) {
     setDimension(dimension);
         setName(name);
@@ -50,7 +56,12 @@ Lager::Lager(int dimension) : Lager("Testname", dimension) {}
 
 void Lager::addArtikel(Artikel* artikel) {
     if(static_cast<int>(this->lagermap.size()) < this->dimension) {
-        this->lagermap.insert(pair<int, Artikel*>(artikel->getArtikelnummer(), artikel));
+        map<int, Artikel*>::iterator iter = this->lagermap.find(artikel->getArtikelnummer());
+        if (iter == lagermap.end()) {
+            this->lagermap.insert(pair<int, Artikel *>(artikel->getArtikelnummer(), artikel));
+        } else {
+            throw inLagerExp;
+        }
     } else {
         throw lagerVollExp;
     }
@@ -200,6 +211,41 @@ void Lager::setDimension(int dimension) {
 
 void Lager::printCredits()  {
     this->artikeldialog.credits();
+}
+
+void Lager::loescheArtikel() {
+    for(map<int, Artikel*>::iterator iter = this->lagermap.begin(); iter != this->lagermap.end(); iter++){
+        delete iter.operator*().second;
+        iter.operator*().second = nullptr;
+    }
+}
+
+/**
+ * Operator =
+ * @param lager
+ * @return
+ */
+Lager& Lager::operator=(const Lager& lager){
+    if(this == &lager){
+        return *this;
+    }
+
+    setName(lager.getName());
+    setDimension(lager.getDimension());
+    loescheArtikel();
+    map<int,Artikel*> tmp = lager.getLagermap();
+    for(map<int, Artikel*>::iterator iter = tmp.begin(); iter != tmp.end(); iter++){
+        addArtikel(iter.operator*().second);
+    }
+
+    return *this;
+}
+
+/**
+ * Destructor
+ */
+Lager::~Lager() {
+    loescheArtikel();
 }
 
 

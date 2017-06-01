@@ -13,6 +13,14 @@
 #include "Lagerdialog.h"
 using namespace std;
 
+/**
+ * Deconstructor
+ */
+Lagerdialog::~Lagerdialog() {
+    delete this->lager;
+    this->lager = nullptr;
+}
+
 Lagerdialog::Lagerdialog(Lager* lager, MainWindow* wd){
     this->lager = lager;
     this->wd = wd;
@@ -54,7 +62,7 @@ void Lagerdialog::start(){
         } catch (const string& e) {
             string text = "Ausnahme: " + e;
             this->wd->getTextBrowser2()->setText(QString::fromStdString(text));
-        } catch(exception e) {
+        } catch(exception& e) {
             this->wd->getTextBrowser2()->setText(QString::fromStdString(e.what()));
         } catch(...) {
             this->wd->getTextBrowser2()->setText(QString::fromStdString("Unbekannter Fehler beim Lagerdialog."));

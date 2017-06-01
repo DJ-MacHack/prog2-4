@@ -29,7 +29,7 @@ void MainWindow::dialog() {
             delete lagerdialog;
             lagerdialog = nullptr;
             }
-        } catch(exception e) {
+        } catch(exception& e) {
            this->getTextBrowser2()->setText(QString::fromStdString(e.what()));
     } catch(...) {
         this->getTextBrowser2()->setText(QString::fromStdString("Unbekannter Fehler beim Lagerdialog."));
@@ -51,7 +51,7 @@ void MainWindow::newLager(){
     if(name != "" && dim > 0) {
         this->getTextBrowser()->setText("Lager wurde angelegt!");
     }
-    } catch(exception e) {
+    } catch(exception& e) {
         this->getTextBrowser2()->setText(e.what());
     } catch(...){
         this->getTextBrowser2()->setText("Unbekannter Fehler beim Anlegen!");

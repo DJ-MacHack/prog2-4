@@ -24,6 +24,7 @@ public:
     FunktionsTyp einlesenFunktion();
     void ausfuehrenFunktion(FunktionsTyp funktion);
     MainWindow* wd;
+    ~Lagerdialog();
 
 private:
     Lager* lager;

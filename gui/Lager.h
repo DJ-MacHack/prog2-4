@@ -34,7 +34,8 @@ public:
     void printLager();
     std::string toString() const;
     void printCredits();
-
+    virtual ~Lager();
+    Lager& operator=(const Lager& lager);
     const map<int, Artikel *> &getLagermap() const;
 
 private:
@@ -44,6 +45,7 @@ private:
     void setName(std::string name);
     void setDimension(int dimension);
     std::map<int, Artikel*> lagermap;
+    void loescheArtikel();
 };
 
 
