@@ -16,9 +16,11 @@
 int main() {
     try {
         Lagerdialog* lagerdialog = new Lagerdialog();
-        lagerdialog->start();
-        delete lagerdialog;
-        lagerdialog = nullptr;
+        if(lagerdialog != nullptr) {
+            lagerdialog->start();
+            delete lagerdialog;
+            lagerdialog = nullptr;
+        }
     } catch (const string& e) {
         cout << "Main: " << e << endl;
     }

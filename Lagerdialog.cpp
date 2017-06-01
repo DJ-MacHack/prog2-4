@@ -32,15 +32,8 @@ Lagerdialog::~Lagerdialog() {
  * Constructor
  */
 Lagerdialog::Lagerdialog() {
-    try {
         Lager *lager = newLager();
         this->lager = lager;
-    } catch (exception e) {
-        cout << e.what() << endl;
-    }
-    catch (...) {
-        cout << "Unbekannter Fehler beim Erstellen des Lagers!" << endl;
-    }
 }
 
 /**
