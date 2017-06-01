@@ -270,7 +270,7 @@ string Lager::toString() const {
         out << "Artikelname: " << iter.operator*().second->getBezeichnung() << '\n';
         out << "Artikelnummer: " << iter.operator*().second->getArtikelnummer() << '\n';
         out << "Artikelbestand: " << iter.operator*().second->getBestand() << '\n';
-        out << "Artikelpreis: " << iter.operator*().second->getPreis() << '\n';
+        out << "Artikelpreis: " << iter.operator*().second->getPreis() << '\n' << '\n';
     } out << endl;
 
     return out.str();
