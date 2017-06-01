@@ -63,7 +63,7 @@ Artikel* Artikeldialog::artikelErstellen() {
         try {
             Artikel* neu = new Artikel(nummer, name, menge, preis);
             return neu;
-        } catch (exception e) {
+        } catch (exception& e) {
             cout << e.what() << endl;
             if (cin) { cout << "Fehler, bitte neu Eingeben!" << endl; }
             else { cout << "Fehler bei der Eingabe!" << endl; }

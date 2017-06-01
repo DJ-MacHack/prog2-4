@@ -65,7 +65,7 @@ void Lagerdialog::start() {
             ausfuehrenFunktion(funktion);
         } catch (const string &e) {
             cout << "Ausnahme: " << e << endl;
-        } catch (exception e) {
+        } catch (exception& e) {
             cout << e.what() << endl;
         }
         catch (...) {
