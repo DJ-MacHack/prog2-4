@@ -4,6 +4,7 @@
 * @date: 23.05.2017.
 * Matrnr.: 3747719
 * mail@hendrik-haas.de
+* Partner: Julian Bruna
 */
 
 #ifndef INC_4_LAGER_H
