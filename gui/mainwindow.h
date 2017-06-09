@@ -31,7 +31,7 @@ private:
     std::string inputtext;
     int inputint;
     double inputdouble;
-    Lager* lager;
+    Lager* lager = nullptr;
 
 private slots:
 

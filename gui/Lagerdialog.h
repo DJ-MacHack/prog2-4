@@ -23,11 +23,12 @@ public:
     void start();
     FunktionsTyp einlesenFunktion();
     void ausfuehrenFunktion(FunktionsTyp funktion);
+    Lager* getLager() const;
     MainWindow* wd;
     ~Lagerdialog();
 
 private:
-    Lager* lager;
+    Lager* lager = nullptr;
     Lager* newLager();
 
 };

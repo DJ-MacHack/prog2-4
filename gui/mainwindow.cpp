@@ -22,9 +22,10 @@ void MainWindow::dialog() {
 //    if(this->lager == nullptr){
 //        newLager();
 //    }
+    Lagerdialog* lagerdialog = nullptr;
     try {
-            Lagerdialog* lagerdialog = new Lagerdialog(this->lager, this);
-            if(lagerdialog != nullptr){
+            lagerdialog = new Lagerdialog(this->lager, this);
+            if(lagerdialog->getLager() != nullptr){
             lagerdialog->start();
             delete lagerdialog;
             lagerdialog = nullptr;
@@ -46,7 +47,8 @@ void MainWindow::newLager(){
                                  QDir::home().dirName(), &ok).toStdString();
     dim = QInputDialog::getInt(0, "Dimension", "Dimension des Lagers:", 1);
     try{
-    Lager* lager = new Lager(name, dim);
+    Lager* lager = nullptr;
+    lager = new Lager(name, dim);
     this->lager = lager;
     if(name != "" && dim > 0) {
         this->getTextBrowser()->setText("Lager wurde angelegt!");

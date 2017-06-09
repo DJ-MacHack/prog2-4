@@ -26,6 +26,10 @@ Lagerdialog::Lagerdialog(Lager* lager, MainWindow* wd){
     this->wd = wd;
 }
 
+Lager* Lagerdialog::getLager() const {
+    return this->lager;
+}
+
 Lager* Lagerdialog::newLager(){
 
 //    int dimensionen = 12;
